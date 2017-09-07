@@ -14,7 +14,7 @@
     //****************************************************************************
     // Autores:
     //     Bruna Tavares Silva @brunats
-    //     Christopher Renkavieski @
+    //     Christopher Renkavieski @ChrisRenka
     // Disciplina:
     //     Inteligência Artificial - BCC  - CCT UDESC
     // Profº:

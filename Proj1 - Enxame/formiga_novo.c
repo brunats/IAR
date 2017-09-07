@@ -1,25 +1,47 @@
+    //****************************************************************************
+    // This program is free software: you can redistribute it and/or modify
+    // it under the terms of the GNU General Public License as published by
+    // the Free Software Foundation, either version 3 of the License, or
+    // (at your option) any later version.
+    //
+    // This program is distributed in the hope that it will be useful,
+    // but WITHOUT ANY WARRANTY; without even the implied warranty of
+    // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    // GNU General Public License for more details.
+    //
+    // You should have received a copy of the GNU General Public License
+    // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    //****************************************************************************
+    // Autores:
+    //     Bruna Tavares Silva @brunats
+    //     Christopher Renkavieski @ChrisRenka
+    // Disciplina:
+    //     Inteligência Artificial - BCC  - CCT UDESC
+    // Profº:
+    //     Rafael Parpinelli
+    //****************************************************************************
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
 
-/**
-    Compile
-    $ gcc -Wall formiga_novo.c -o formiga
-    $ ./formiga
+    //****************************************************************************
+    // Compile
+    // $ gcc -Wall formiga_novo.c -o formiga
+    // $ ./formiga
+    //
+    // Instruções:
+    //     "param.txt" contém os parâmetros mutáveis do sistema
+    //         X: tam em X
+    //         Y: tam em Y
+    //         A: n de agentes
+    //         I: n de itens mortos
+    //         R: raio de visao do agente
+    //         P: n max de passos
+    //****************************************************************************
 
-
-
-    Instruções:
-        "param.txt" contém os parâmetros mutáveis do sistema
-            X: tam em X
-            Y: tam em Y
-            A: n de agentes
-            I: n de itens mortos
-            R: raio de visao do agente
-            P: n max de passos
-**/
 
 typedef struct {
     int posx, posy;
