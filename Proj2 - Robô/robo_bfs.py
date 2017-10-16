@@ -209,9 +209,9 @@ def bfs(matriz, inicio, fim, fila):
         backTrack(matriz, aux, fim)
     
     mostraCampo(aux, inicio, fim)
-    espera()
+    #espera()
     
-    return
+    return (matriz[f0][f1][1], nos)
 
 def anterior(matriz, atual):
     a0 = atual[0]
@@ -239,28 +239,56 @@ def backTrack(matriz, aux, fim):
     a1 = fim[1]
     atual = [a0, a1]
     #aux[a0][a1][1] = 0
+    pronfundidade = 0
     
-    while(matriz[a0][a1][2] != 0):
+    while(matriz[a0][a1][1] != 0):
         atual = anterior(matriz, atual)
+        pronfundidade += 1
         if(atual[0] == -1):
             return
         
         a0 = atual[0]
         a1 = atual[1]
         aux[a0][a1][1] = 128
+    print("aqui e a profundidade {}". format(pronfundidade))
+
     
 
+def exec_mouse(matriz):
+    inicio = []
+    fim = []
+    posicoes(matriz, inicio, fim)
+    fila = queue.Queue()
+    bfs(matriz, inicio, fim, fila)
+
+def exec_teste(matriz):
+    inicio = [[34, 4], [19, 19], [9, 9], [0,0], [17,6], [8,3], [39, 4], [14, 14], [0,1], [0,19]]
+    fim = [[24,39], [40,16], [29,31], [22,34], [37,24], [8,34], [1,34], [39,39], [41,41], [19,41]]
+    pesos = []
+    nos = []
+    
+    for i in range(0, 10):
+        print(i)
+        aux = deepcopy(matriz)
+        fila = queue.Queue()
+        (p, n) = bfs(aux, inicio[i], fim[i], fila)
+        pesos.append(p)
+        nos.append(n)
+        
+    print(pesos)
+    print(nos)
+    
 ####fim das funções
 
-fila = queue.Queue()
+#fila = queue.Queue()
 
 matriz = leitura()
 #print (np.matrix(matriz))
 
 #inicio = [33, 9]
 #fim = [12, 21]
-inicio = []
-fim = []
+#inicio = []
+#fim = []
 
 pygame.init()
 
@@ -274,12 +302,13 @@ pygame.display.set_caption('IAR - Robô')
 # preenchendo o fundo com preto
 screen.fill(BLACK)
 
-mostraCampo(matriz, inicio, fim)
-posicoes(matriz, inicio, fim)
-bfs(matriz, inicio, fim, fila)
-
+mostraCampo(matriz, [], [])
+#posicoes(matriz, inicio, fim)
+#bfs(matriz, inicio, fim, fila)
+#exec_mouse(matriz)
+exec_teste(matriz)
   
-    
+espera()    
     
     
     

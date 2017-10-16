@@ -150,7 +150,7 @@ def dfs_start(matriz, inicio, fim, nivel, nos):
     
     natual = 0
     
-    dfs_rec(matriz, inicio, fim, encontrou, nos, natual, nivel)
+    dfs_rec(matriz, inicio, inicio, fim, encontrou, nos, natual, nivel)
     
     #print(matriz[inicio[0]][inicio[1]][1])
     #print(matriz[inicio[0]-1][inicio[1]][1])
@@ -159,19 +159,19 @@ def dfs_start(matriz, inicio, fim, nivel, nos):
     #print(matriz[fim[0]][fim[1]][1])
     
     if(encontrou[0] == 0):       
-        return 0
+        return (-1,-1)
     
     backTrack(matriz, aux, fim)
     print(matriz[fim[0]][fim[1]][1])
     print(nos[0])
     
     mostraCampo(aux, inicio, fim)
-    espera()
+    #espera()
     
-    return 1
+    return (matriz[fim[0]][fim[1]][1], nos[0])
     
 
-def dfs_rec(matriz, atual, fim, encontrou, nos, natual, nivel):
+def dfs_rec(matriz, atual, inicio, fim, encontrou, nos, natual, nivel):
     a0 = atual[0]
     a1 = atual[1]
     f0 = fim[0]
@@ -186,7 +186,7 @@ def dfs_rec(matriz, atual, fim, encontrou, nos, natual, nivel):
         encontrou[0] = 1
         return
         
-    mostraCampo(matriz, inicio, fim)
+    #mostraCampo(matriz, inicio, fim)
     
     #print(matriz[a0][a1][1])
     #norte
@@ -194,25 +194,25 @@ def dfs_rec(matriz, atual, fim, encontrou, nos, natual, nivel):
     if(a0 > 0 and matriz[a0-1][a1][1] == -1 and encontrou[0]==0 and natual < nivel):
         matriz[a0-1][a1][1] = matriz[a0][a1][1] + peso(matriz[a0-1][a1][0])
         natual += 1
-        dfs_rec(matriz, [a0-1, a1], fim, encontrou, nos, natual, nivel)
+        dfs_rec(matriz, [a0-1, a1], inicio, fim, encontrou, nos, natual, nivel)
     #leste
     #if(a1 < 41 and (matriz[a0][a1+1][1] == -1 or (matriz[a0][a1][1] + peso(matriz[a0][a1+1][0]) < matriz[a0][a1+1][1])) and encontrou[0]==0):
     if(a1 < 41 and matriz[a0][a1+1][1] == -1 and encontrou[0]==0 and natual < nivel):
         matriz[a0][a1+1][1] = matriz[a0][a1][1] + peso(matriz[a0][a1+1][0])
         natual += 1
-        dfs_rec(matriz, [a0, a1+1], fim, encontrou, nos, natual, nivel)
+        dfs_rec(matriz, [a0, a1+1], inicio, fim, encontrou, nos, natual, nivel)
     #sul
     #if(a0 < 41 and (matriz[a0+1][a1][1] == -1 or (matriz[a0][a1][1] + peso(matriz[a0+1][a1][0]) < matriz[a0+1][a1][1])) and encontrou[0]==0):
     if(a0 < 41 and matriz[a0+1][a1][1] == -1 and encontrou[0]==0 and natual < nivel):
         matriz[a0+1][a1][1] = matriz[a0][a1][1] + peso(matriz[a0+1][a1][0])
         natual += 1
-        dfs_rec(matriz, [a0+1, a1], fim, encontrou, nos, natual, nivel)
+        dfs_rec(matriz, [a0+1, a1], inicio, fim, encontrou, nos, natual, nivel)
     #oeste
     #if(a1 > 0 and (matriz[a0][a1-1][1] == -1 or (matriz[a0][a1][1] + peso(matriz[a0][a1-1][0]) < matriz[a0][a1-1][1])) and encontrou[0]==0):
     if(a1 > 0 and matriz[a0][a1-1][1] == -1 and encontrou[0]==0 and natual < nivel):
         matriz[a0][a1-1][1] = matriz[a0][a1][1] + peso(matriz[a0][a1-1][0])
         natual += 1
-        dfs_rec(matriz, [a0, a1-1], fim, encontrou, nos, natual, nivel)
+        dfs_rec(matriz, [a0, a1-1], inicio, fim, encontrou, nos, natual, nivel)
     
 def executa(matriz, inicio, fim):
     nivel = 1
@@ -220,10 +220,14 @@ def executa(matriz, inicio, fim):
     nos = []
     nos.append(0)
     
-    while(dfs_start(aux, inicio, fim, nivel, nos) == 0):
+    (peso, totalnos) = dfs_start(aux, inicio, fim, nivel, nos)
+    while(peso == -1):
         nivel +=1
-        aux = deepcopy(matriz)      
+        aux = deepcopy(matriz)
+        (peso, totalnos) = dfs_start(aux, inicio, fim, nivel, nos)  
 
+    return (peso, totalnos)   
+     
 def anterior(matriz, atual):
     a0 = atual[0]
     a1 = atual[1]
@@ -250,17 +254,41 @@ def backTrack(matriz, aux, fim):
     a1 = fim[1]
     atual = [a0, a1]
     aux[a0][a1][1] = 0
+    pronfundidade = 0
     
     while(matriz[a0][a1][1] != 0):
         atual = anterior(matriz, atual)
-        if(atual[0] == -1):
+        pronfundidade += 1
+        if(atual[0] == -1):    
             return
         
         a0 = atual[0]
         a1 = atual[1]
         aux[a0][a1][1] = 128
+    print("aqui e a profundidade {}". format(pronfundidade))    
     
+def exec_mouse(matriz):
+    inicio = []
+    fim = []
+    posicoes(matriz, inicio, fim)
+    (p, n) = executa(matriz, inicio, fim)
 
+def exec_teste(matriz):
+    inicio = [[34, 4], [19, 19], [9, 9], [0,0], [17,6], [8,3], [39, 4], [14, 14], [0,1], [0,19]]
+    fim = [[24,39], [40,16], [29,31], [22,34], [37,24], [8,34], [1,34], [39,39], [41,41], [19,41]]
+    pesos = []
+    nos = []
+    
+    for i in range(0, 10):
+        print(i)
+        aux = deepcopy(matriz)
+        (p, n) = executa(aux, inicio[i], fim[i])
+        pesos.append(p)
+        nos.append(n)
+        
+    print(pesos)
+    print(nos)
+    
 ####fim das funções
 
 sys.setrecursionlimit(1765)
@@ -270,8 +298,8 @@ matriz = leitura()
 
 #inicio = [33, 9]
 #fim = [12, 21]
-inicio = []
-fim = []
+#inicio = []
+#fim = []
 
 pygame.init()
 
@@ -287,13 +315,14 @@ screen.fill(BLACK)
 
 #mostraCampo(matriz, inicio, fim)
 
-mostraCampo(matriz, inicio, fim)
-posicoes(matriz, inicio, fim)
+mostraCampo(matriz, [], [])
+#posicoes(matriz, inicio, fim)
 
-executa(matriz, inicio, fim)
-
+#executa(matriz, inicio, fim)
+#exec_mouse(matriz)
+exec_teste(matriz)
     
-    
+espera()  
     
     
     

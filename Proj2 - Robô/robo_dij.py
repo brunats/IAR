@@ -220,9 +220,9 @@ def dij(matriz, inicio, fim, lista):
     
     mostraCampo(aux, inicio, fim)
     #pygame.display.flip()
-    espera()
+    #espera()
     
-    return
+    return (matriz[f0][f1][1], nos)
 
 def anterior(matriz, atual):
     a0 = atual[0]
@@ -250,15 +250,18 @@ def backTrack(matriz, aux, fim):
     a1 = fim[1]
     atual = [a0, a1]
     #aux[a0][a1][1] = 0
+    pronfundidade = 0
     
     while(matriz[a0][a1][1] != 0):
         atual = anterior(matriz, atual)
+        pronfundidade += 1
         if(atual[0] == -1):
             return
         
         a0 = atual[0]
         a1 = atual[1]
         aux[a0][a1][1] = 128
+    print("aqui e a profundidade {}". format(pronfundidade))
 
 def posInsert(lista, custo):
     inicio = 0
@@ -292,7 +295,28 @@ def posInsert(lista, custo):
         
     return pos
     
+def exec_mouse(matriz, lista):
+    inicio = []
+    fim = []
+    posicoes(matriz, inicio, fim)
+    dij(matriz, inicio, fim, lista)
 
+def exec_teste(matriz, lista):
+    inicio = [[34, 4], [19, 19], [9, 9], [0,0], [17,6], [8,3], [39, 4], [14, 14], [0,1], [0,19]]
+    fim = [[24,39], [40,16], [29,31], [22,34], [37,24], [8,34], [1,34], [39,39], [41,41], [19,41]]
+    pesos = []
+    nos = []
+    
+    for i in range(0, 10):
+        print(i)
+        aux = deepcopy(matriz)
+        (p, n) = dij(aux, inicio[i], fim[i], lista)
+        pesos.append(p)
+        nos.append(n)
+        
+    print(pesos)
+    print(nos)
+    
 ####fim das funções
 
 lista = []
@@ -300,8 +324,8 @@ lista = []
 matriz = leitura()
 #print (np.matrix(matriz))
 
-inicio = []
-fim = []
+#inicio = []
+#fim = []
 
 pygame.init()
 
@@ -315,50 +339,14 @@ pygame.display.set_caption('IAR - Robô')
 # preenchendo o fundo com preto
 screen.fill(BLACK)
 
-mostraCampo(matriz, inicio, fim)
-posicoes(matriz, inicio, fim)
+mostraCampo(matriz, [], [])
+#posicoes(matriz, inicio, fim)
 
-dij(matriz, inicio, fim, lista)
+#exec_mouse(matriz, lista)
+exec_teste(matriz, lista)
 
-
-"""
-# iniciando o loop do robô
-while True:
-
-    # PROCESSAMENTO DE ENTRADA
-
-    # capturando eventos
-    event = pygame.event.poll()
-    # caso o evento QUIT (clicar no x da janela) seja disparado
-    if event.type == pygame.QUIT:
-        # saia do loop finalizando o programa
-        break
-
-    # ATUALIZAÇÃO DO JOGO
-    #qdo tiver que mover o robo aqui
-
-     # DESENHO
-
-    # preenchendo o fundo com preto
-    #screen.fill(BLACK)
-
-    #desenhando a matriz
-
-    # atualizando a tela
-    pygame.display.flip()
-"""
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+espera()
+  
     
     
     

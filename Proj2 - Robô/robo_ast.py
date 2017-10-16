@@ -257,15 +257,18 @@ def backTrack(matriz, aux, fim):
     a1 = fim[1]
     atual = [a0, a1]
     #aux[a0][a1][1] = 0
+    pronfundidade = 0
     
     while(matriz[a0][a1][1] != 0):
         atual = anterior(matriz, atual)
+        pronfundidade += 1
         if(atual[0] == -1):
             return
         
         a0 = atual[0]
         a1 = atual[1]
         aux[a0][a1][1] = 128
+    print("aqui e a profundidade {}". format(pronfundidade))
 
 def posInsert(lista, custo):
     inicio = 0
@@ -349,7 +352,7 @@ screen.fill(BLACK)
 mostraCampo(matriz, [], [])
 #posicoes(matriz, inicio, fim)
 
-const = 1.3
+const = 1
 #const = 0
 
 #ast(matriz, inicio, fim, lista, const)
