@@ -1,6 +1,11 @@
 # IAR
-Trabalhos realizados na disciplina de IAR, CCT - UDESC
-pelos acadêmicos Bruna Tavares Silva e Christopher Renkavieski.
+
+Trabalhos realizados na disciplina de IAR, CCT - UDESC pelos acadêmicos Bruna Tavares Silva e Christopher Renkavieski.
+
+Lembrando que esses algoritmos apesar de estarem em um repositório público, possuem licença.
+
+Proj1 Enxame 
+	Projeto de algoritmo baseado em enxame de formigas, três bases, uma real.
 
 Algoritimos de busca cega:
 
